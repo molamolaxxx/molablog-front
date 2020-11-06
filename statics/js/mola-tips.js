@@ -202,7 +202,7 @@ function initModel(waifuPath){
 
 	$.ajax({
         cache: true,
-        url: 'statics/data/live2d.json',
+        url: '/statics/data/live2d.json',
         dataType: "json",
         success: function (result){
             $.each(result.mouseover, function (index, tips){

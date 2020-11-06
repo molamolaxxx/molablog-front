@@ -43,8 +43,10 @@ var titleMap={};
                 }
             }
             // 创建目录
-            createMulu(classList);
-            initMulu();
+            setTimeout(()=>{
+                createMulu(classList);
+                initMulu();
+            },100)
         }
     });
 
