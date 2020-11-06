@@ -1,7 +1,10 @@
 var page=1;
 var desc=1;
 var $container = $("#absContainer");
-function selectDiv(num,blogData) {
+function selectDiv(num,blogData,id) {
+    if (!id) {
+        id = ""
+    }
     switch(num){
         case 0:{
             var imgList=['a','b','c','d'];
@@ -12,7 +15,7 @@ function selectDiv(num,blogData) {
             var createTime=parsetime(blogData.createTime);
             var abstract=cutStrByByte(blogData.text,142)+"...";
 
-            var div_1="<div class=\"post post-layout-list aos-init\" data-aos=\"fade-up\">\n" +
+            var div_1="<div id='"+id+"' class=\"post post-layout-list aos-init\" data-aos=\"fade-up\">\n" +
                 "\t\t\t\t\t\t\t<div class=\"status_list_item icon_kyubo\">\n" +
                 "\t\t\t\t\t\t\t\t<div class=\"status_user\" style=\"background-image: url("+imgUrl+");\">\n" +
                 "\t\t\t\t\t\t\t\t\t<div class=\"status_section\">\n" +
@@ -34,7 +37,7 @@ function selectDiv(num,blogData) {
             var title=blogData.title;
             var abstract=cutStrByByte(blogData.text,280)+"...";
             var commentNum=blogData.commentCount;
-            var div_2="<div class=\"post post-layout-list aos-init\" data-aos=\"fade-up\">\n" +
+            var div_2="<div id='"+id+"' class=\"post post-layout-list aos-init\" data-aos=\"fade-up\">\n" +
                 "\t\t\t\t\t\t\t<div class=\"postnormal review \">\n" +
                 "\t\t\t\t\t\t\t\t<div class=\"post-container review-item\">\n" +
                 "\t\t\t\t\t\t\t\t\t<div class=\"row review-item-wrapper\">\n" +
@@ -73,7 +76,7 @@ function selectDiv(num,blogData) {
             var createTime = parsetime(blogData.createTime);
             var pv=blogData.pv;
             var abstract=cutStrByByte(blogData.text,100)+"...";
-            var div_3="<div class=\"post post-layout-list js-gallery aos-init\" data-aos=\"fade-up\">\n" +
+            var div_3="<div id='"+id+"' class=\"post post-layout-list js-gallery aos-init\" data-aos=\"fade-up\">\n" +
                 "\t\t\t\t\t\t\t<div class=\"post-album\">\n" +
                 "\t\t\t\t\t\t\t\t<div class=\"row content\">\n" +
                 "\t\t\t\t\t\t\t\t\t<div class=\"bg\" style=\"background-image: url("+imgUrl+");\"></div>\n" +
@@ -164,9 +167,12 @@ function getPage(page,descType) {
                 if(blogData.length==0)
                     swal("missing","一切事物都有终点","warning");
                 var foreType = -1;
+                var firstDivId;
                 for (var i = 0; i < limit; i++) {
                     if (i == 0) {
-                        $container.append(selectDiv(1, blogData[i]))
+                        firstDivId = (new Date()).valueOf();
+                        firstDivOfBatch = selectDiv(1, blogData[i], firstDivId)
+                        $container.append(firstDivOfBatch)
                         continue;
                     }
                     do {
@@ -178,6 +184,19 @@ function getPage(page,descType) {
                     $container.append(selectDiv(randomType, blogData[i]))
                 }
                 removeSpinner();
+                // 移到第一个div
+                let dom = document.getElementById(firstDivId)
+                let top = 0;
+                if (page > 1) {
+                    top = dom.offsetTop + 220
+                } else{
+                    top = dom.offsetTop - 100
+                }
+                window.scrollTo({
+                    top: top,
+                    behavior: "smooth"
+                })
+                
             }
         });
     }(jQuery, window));

@@ -6,6 +6,11 @@ $(document).ready(function() {
     var $container = $(".post_content")[0]
     var contentListGlobla;
     var domHeightList = [];
+    $("#mulu").mouseover(function(){
+        $("body").attr("style","overflow:hidden")
+    }).mouseout(function(){
+        $("body").attr("style","")
+    });
     //
     var dom = function(name) {
         return "<li class='index-item'><a class='index-link' onclick='scrollToDom(\""+name+"\")' id='"+name+"_idx'>"+ name +"</a></li>"
@@ -41,7 +46,6 @@ $(document).ready(function() {
             behavior: "smooth"
         })
         let item = dom.parentNode
-        console.log(item)
         // 滑动到这个位置
         if (lastClick) lastClick.classList.remove("current")
         // 清除所有
@@ -51,10 +55,11 @@ $(document).ready(function() {
 
     scrollToDom = function(name) {
         let dom = document.getElementById(name)
-        window.scrollTo({
-            top:dom.offsetTop+420,
-            behavior: "smooth"
-        })
+        $('html,body').animate({scrollTop:dom.offsetTop+420},200);
+        // window.scrollTo({
+        //     top:dom.offsetTop+420,
+        //     behavior: "smooth"
+        // })
     }
 
     var isShown = false;
@@ -95,7 +100,6 @@ $(document).ready(function() {
                     selectMulu(contentListGlobla[i])
                 }
                 lastIdx = i;
-                console.log(i)
             }
         }
         }, 100)
