@@ -143,7 +143,7 @@ function showHitokoto(){
         window.setTimeout(function() {showMessage(text, 3000);}, 5000);
     });
 	/*
-	$.getJSON('https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335',function(result){
+	$.getJSON('https://api3.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335',function(result){
         var text = '这句一言出处是 <span style="color:#0099cc;">『{source}』</span>，是 <span style="color:#0099cc;">FGHRSH</span> 在 {date} 收藏的！';
         text = text.render({source: result.source, date: result.date});
         showMessage(result.hitokoto, 5000);
@@ -242,7 +242,7 @@ function loadModel(modelId, modelTexturesId){
     localStorage.setItem('modelId', modelId);
     if (modelTexturesId === undefined) modelTexturesId = 0;
     localStorage.setItem('modelTexturesId', modelTexturesId);
-    loadlive2d('live2d', 'https://api.fghrsh.net/live2d/get/?id='+modelId+'-'+modelTexturesId, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
+    loadlive2d('live2d', 'https://api3.fghrsh.net/live2d/get/?id='+modelId+'-'+modelTexturesId, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
 }
 
 function loadRandModel(){
@@ -253,7 +253,7 @@ function loadRandModel(){
 
     $.ajax({
         cache: false,
-        url: 'https://api.fghrsh.net/live2d/'+modelTexturesRandMode+'_textures/?id='+modelId+'-'+modelTexturesId,
+        url: 'https://api3.fghrsh.net/live2d/'+modelTexturesRandMode+'_textures/?id='+modelId+'-'+modelTexturesId,
         dataType: "json",
         success: function (result){
             if (result.textures['id'] == 1 && (modelTexturesId == 1 || modelTexturesId == 0)) {
@@ -273,7 +273,7 @@ function loadOtherModel(){
 
     $.ajax({
         cache: false,
-        url: 'https://api.fghrsh.net/live2d/'+modelTexturesRandMode+'/?id='+modelId,
+        url: 'https://api3.fghrsh.net/live2d/'+modelTexturesRandMode+'/?id='+modelId,
         dataType: "json",
         success: function (result){
             loadModel(result.model['id']);
